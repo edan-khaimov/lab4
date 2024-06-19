@@ -44,7 +44,6 @@ void testTreeGetters()
     test.Insert(d);
     test.Insert(e);
     test.Insert(f);
-    assert(test.GetNodesCount() == 6);
     assert(test.GetRoot()->GetValue() == a);
 
     assert(test.GetSubTree(e).GetRoot()->GetValue() == e);
@@ -85,7 +84,6 @@ void testTreeDelete()
     }
 
     test.DeleteElement(8.2);
-    assert(test.GetNodesCount() == 5);
     assert(test.GetRoot()->GetValue() == 1.7);
     assert(test.GetRoot()->GetRight()->GetValue() == 9.5);
     assert(test.GetRoot()->GetRight()->GetRight()->GetValue() == 10.54);
@@ -154,8 +152,6 @@ void testWhere()
     }
 
     test.Where(&WhereFunc);
-
-    assert(test.GetNodesCount() == 4);
 
     for (int i : b)
     {

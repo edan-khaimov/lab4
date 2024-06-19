@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include "Traverse.h"
 #include "MapReduceFunctions.h"
 
 void help()
@@ -11,10 +12,10 @@ void help()
     std::cout << "To get this menu type <help>" << std::endl;
     std::cout << "To finish program type <quit>" << std::endl;
     std::cout << "Available functions for tree:" << std::endl;
-    std::cout << "print, insert, delete, is_sub_tree, get_sub_tree, find_min, find_max, map, where, reduce" << std::endl;
+    std::cout << "print, insert, delete, is_sub_tree, get_sub_tree, find_min, find_max" << std::endl;
     std::cout << "Available traverses for tree:" << std::endl;
     std::cout << "KPL, KLP, LKP, LPK, PKL, PLK" << std::endl;
-    std::cout << "Available types of values: double, int, complex" << std::endl;
+    std::cout << "Available types of values: int, complex" << std::endl;
     std::cout << "To do action type <type> <function> or <type> <traverse>" << std::endl;
 }
 
@@ -40,8 +41,8 @@ void printTree(const std::string& prefix, Node<T>* node, bool isLeft)
 
         std::cout << node->GetValue() << std::endl;
 
-        printTree( prefix + (isLeft ? "|   " : "    "), node->GetLeft(), true);
-        printTree( prefix + (isLeft ? "|   " : "    "), node->GetRight(), false);
+        printTree(prefix + (isLeft ? "|   " : "    "), node->GetLeft(), true);
+        printTree(prefix + (isLeft ? "|   " : "    "), node->GetRight(), false);
     }
 }
 
@@ -51,11 +52,11 @@ void setTree(BinaryTree<T>& tree)
     int amount;
     std::cout << "Enter amount of elements:" << std::endl;
     std::cin >> amount;
+    std::cout << "Enter values:" << std::endl;
 
     for (int i = 0; i < amount; i++)
     {
         T value;
-        std::cout << "Enter value:" << std::endl;
         std::cin >> value;
         tree.Insert(value);
     }
@@ -78,7 +79,7 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         std::cout << "Enter value:" << std::endl;
         std::cin >> value;
         tree.Insert(value);
-        printTree(tree);
+        printTree("", tree.GetRoot(), false);
     }
     else if (command == "delete")
     {
@@ -87,8 +88,15 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         T value;
         std::cout << "Enter value:" << std::endl;
         std::cin >> value;
-        tree.Delete(value);
-        printTree(tree);
+        tree.DeleteElement(value);
+        if (tree.Find(value) == nullptr)
+        {
+            std::cout << "Value is not in tree" << std::endl;
+        }
+        else
+        {
+            printTree("", tree.GetRoot(), false);
+        }
     }
     else if (command == "is_sub_tree")
     {
@@ -107,78 +115,61 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         T value;
         std::cin >> value;
         std::cout << "Sub tree:" << std::endl;
-        printTree("", tree.GetSubTree(value), false);
+        printTree("", tree.GetSubTree(value).GetRoot(), false);
     }
     else if (command == "find_min")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Min value: " << tree.FindMin() << std::endl;
+        std::cout << "Min value: " << tree.FindMin()->GetValue() << std::endl;
     }
     else if (command == "find_max")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Max value: " << tree.FindMax() << std::endl;
-    }
-    else if (command == "map")
-    {
-        std::cout << "Create tree:" << std::endl;
-        setTree(tree);
-        std::cout << "function: i -> i * i" << std::endl;
-        tree.Map(&MapFunc);
-        printTree("", tree.GetRoot(), false);
-    }
-    else if (command == "where")
-    {
-        std::cout << "Create tree:" << std::endl;
-        setTree(tree);
-        std::cout << "function: i -> i % 2 == 0" << std::endl;
-        tree.Where(&WhereFunc);
-        printTree("", tree.GetRoot(), false);
-    }
-    else if (command == "reduce")
-    {
-        std::cout << "Create tree:" << std::endl;
-        setTree(tree);
-        std::cout << "function: i, j -> i + j" << std::endl;
-        std::cout << "Result: " << tree.Reduce(&ReduceFunc, 0) << std::endl;
+        std::cout << "Max value: " << tree.FindMax()->GetValue() << std::endl;
     }
     else if (command == "KPL")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Result: " << printKPL(tree) << std::endl;
+        std::cout << "Result: " << std::endl;
+        printKPL(tree.GetRoot());
     }
     else if (command == "LPK")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Result: " << printLPK(tree) << std::endl;
+        std::cout << "Result: " << std::endl;
+        printLPK(tree.GetRoot());
     }
     else if (command == "PKL")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Result: " << printPKL(tree) << std::endl;
+        std::cout << "Result: " << std::endl;
+        printPKL(tree.GetRoot());
     }
     else if (command == "PLK")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Result: " << printPLK(tree) << std::endl;
+        std::cout << "Result: " << std::endl;
+        printPLK(tree.GetRoot());
     }
     else if (command == "LKP")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Result: " << printLKP(tree) << std::endl;
+        std::cout << "Result: " << std::endl;
+        printLKP(tree.GetRoot());
     }
     else if (command == "KLP")
     {
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
-        std::cout << "Result: " << printKLP(tree) << std::endl;
+        std::cout << "Result: " << std::endl;
+        printKLP(tree.GetRoot());
     }
     else
     {

@@ -4,68 +4,68 @@
 #include "Tree.h"
 
 template <typename T>
-void PrintKLP(Node<T> *node)
+void printKLP(Node<T> *node)
 {
     if (node != nullptr)
     {
         std::cout << "(" << node->GetValue() << ") ";
-        PrintKLP(node->GetLeft());
-        PrintKLP(node->GetRight());
+        printKLP(node->GetLeft());
+        printKLP(node->GetRight());
     }
 }
 
 template <typename T>
-void PrintKPL(Node<T> *node)
+void printKPL(Node<T> *node)
 {
     if (node != nullptr)
     {
         std::cout << "(" << node->GetValue() << ") ";
-        PrintPKL(node->GetRight());
-        PrintPKL(node->GetLeft());
+        printPKL(node->GetRight());
+        printPKL(node->GetLeft());
     }
 }
 
 template <typename T>
-void PrintLPK(Node<T> *node)
+void printLPK(Node<T> *node)
 {
     if (node != nullptr)
     {
-        PrintLPK(node->GetLeft());
-        PrintLPK(node->GetRight());
-        std::cout << "(" << node->GetValue() << ") ";
-    }
-}
-
-template <typename T>
-void PrintPLK(Node<T> *node)
-{
-    if (node != nullptr)
-    {
-        PrintPLK(node->GetRight());
-        PrintPLK(node->GetLeft());
+        printLPK(node->GetLeft());
+        printLPK(node->GetRight());
         std::cout << "(" << node->GetValue() << ") ";
     }
 }
 
 template <typename T>
-void PrintLKP(Node<T> *node)
+void printPLK(Node<T> *node)
 {
     if (node != nullptr)
     {
-        PrintLKP(node->GetLeft());
+        printPLK(node->GetRight());
+        printPLK(node->GetLeft());
         std::cout << "(" << node->GetValue() << ") ";
-        PrintLKP(node->GetRight());
     }
 }
 
 template <typename T>
-void PrintPKL(Node<T> *node)
+void printLKP(Node<T> *node)
 {
     if (node != nullptr)
     {
-        PrintPKL(node->GetRight());
+        printLKP(node->GetLeft());
         std::cout << "(" << node->GetValue() << ") ";
-        PrintPKL(node->GetLeft());
+        printLKP(node->GetRight());
+    }
+}
+
+template <typename T>
+void printPKL(Node<T> *node)
+{
+    if (node != nullptr)
+    {
+        printPKL(node->GetRight());
+        std::cout << "(" << node->GetValue() << ") ";
+        printPKL(node->GetLeft());
     }
 }
 
