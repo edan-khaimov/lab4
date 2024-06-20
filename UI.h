@@ -39,7 +39,7 @@ void printTree(const std::string& prefix, Node<T>* node, bool isLeft)
 
         std::cout << (isLeft ? "|--" : "L--" );
 
-        std::cout << node->GetValue() << std::endl;
+        std::cout << "(" << node->GetValue() << ")" << std::endl;
 
         printTree(prefix + (isLeft ? "|   " : "    "), node->GetLeft(), true);
         printTree(prefix + (isLeft ? "|   " : "    "), node->GetRight(), false);
@@ -91,7 +91,6 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         T value;
         std::cout << "Enter value:" << std::endl;
         std::cin >> value;
-        tree.DeleteElement(value);
         if (tree.Find(value) == nullptr)
         {
             std::cout << "Value is not in tree" << std::endl;
@@ -100,6 +99,7 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         {
             std::cout << "Before delete: " << std::endl;
             printTree("", tree.GetRoot(), false);
+            tree.DeleteElement(value);
             std::cout << "After delete: " << std::endl;
             printTree("", tree.GetRoot(), false);
         }
