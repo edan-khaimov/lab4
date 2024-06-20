@@ -124,12 +124,16 @@ private:
 
     Node<T> *Insert(Node<T> *node, const T value)
     {
-        if (node == nullptr) {
+        if (node == nullptr)
+        {
             return new Node<T>(value);
         }
-        if (value < node->GetValue()) {
+        if (value < node->GetValue())
+        {
             node->SetLeft(Insert(node->GetLeft(), value));
-        } else if (value > node->GetValue()) {
+        }
+        else if (value > node->GetValue())
+        {
             node->SetRight(Insert(node->GetRight(), value));
         }
         return node;
@@ -229,11 +233,13 @@ private:
             return true;
         }
 
-        if (node == nullptr) {
+        if (node == nullptr)
+        {
             return false;
         }
 
-        if (node->GetValue() == subNode->GetValue()) {
+        if (node->GetValue() == subNode->GetValue())
+        {
             return AreIdentical(node, subNode);
         }
 
