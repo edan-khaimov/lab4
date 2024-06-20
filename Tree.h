@@ -2,8 +2,6 @@
 #define LAB4_MEPHI_TREE_H
 
 #include <cmath>
-#include "../Lab2-mephi/MapReduce.h"
-#include "../Lab2-mephi/ArraySequence.h"
 
 template <typename T>
 class BinaryTree;
@@ -82,16 +80,6 @@ private:
             DeleteTree(node->GetLeft());
             DeleteTree(node->GetRight());
             delete node;
-        }
-    }
-
-    void SetToArray(Node<T> *node, MutableArraySequence<T> *arr)
-    {
-        if (node != nullptr)
-        {
-            SetToArray(node->GetLeft(), arr);
-            arr->Append(node->GetValue());
-            SetToArray(node->GetRight(), arr);
         }
     }
 
@@ -216,15 +204,6 @@ private:
         if (!func(node->GetValue())) {
             this->DeleteElement(node->GetValue());
         }
-    }
-
-    T Reduce(Node<T> *node, T (*func)(T, T), T init)
-    {
-        auto *array = new MutableArraySequence<T>();
-        SetToArray(node, array);
-        T result = reduce(*array, func, init);
-        delete array;
-        return result;
     }
 
     bool IsSubTree(Node<T> *node, Node<T> *subNode)
@@ -402,12 +381,6 @@ public:
     void Where(bool (*func)(T))
     {
         Where(this->root, func);
-    }
-
-    T Reduce(T (*func)(T, T), T init)
-    {
-        T result = Reduce(this->GetRoot(), func, init);
-        return result;
     }
 
     BinaryTree<T> GetSubTree(const T value) {

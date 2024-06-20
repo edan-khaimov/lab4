@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 #include "Traverse.h"
-#include "MapReduceFunctions.h"
+#include "MapWhereFunctions.h"
 
 void help()
 {

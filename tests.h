@@ -3,7 +3,7 @@
 
 #include <cassert>
 #include "Complex.h"
-#include "MapReduceFunctions.h"
+#include "MapWhereFunctions.h"
 
 void testTreeConstructors()
 {
@@ -159,20 +159,6 @@ void testWhere()
     {
         assert(test.Find(i) != nullptr);
     }
-}
-
-void testReduce()
-{
-    int a[8] = {1, 2, 3, 4, 5, 6, 7, 8};
-
-    BinaryTree<int> test;
-    for (int i : a)
-    {
-        test.Insert(i);
-    }
-
-    int result = test.Reduce(&ReduceFunc, 0);
-    assert(result == 36);
 }
 
 void testBalance()
