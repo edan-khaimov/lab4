@@ -1,6 +1,7 @@
 #ifndef LAB4_MEPHI_TREE_H
 #define LAB4_MEPHI_TREE_H
 
+#include <cmath>
 #include "../Lab2-mephi/MapReduce.h"
 #include "../Lab2-mephi/ArraySequence.h"
 
@@ -34,7 +35,7 @@ private:
 public:
     Node()
     {
-        this->data = 0;
+        this->data = T();
         this->left = nullptr;
         this->right = nullptr;
     }
@@ -69,7 +70,8 @@ public:
 };
 
 template <typename T>
-class BinaryTree {
+class BinaryTree
+{
 private:
     Node<T> *root;
 
@@ -264,6 +266,70 @@ private:
         return FindMin(node->GetLeft());
     }
 
+    int TreeToVine(Node<T> *node)
+    {
+        int count = 0;
+
+        Node<T> *tmp = node->GetRight();
+
+        while (tmp != nullptr)
+        {
+            if (tmp->GetLeft() != nullptr)
+            {
+                Node<T> *oldTmp = tmp;
+                tmp = tmp->GetLeft();
+                oldTmp->SetLeft(tmp->GetRight());
+                tmp->SetRight(oldTmp);
+                node->SetRight(tmp);
+            }
+            else
+            {
+                count++;
+                node = tmp;
+                tmp = tmp->GetRight();
+            }
+        }
+
+        return count;
+    }
+
+    void Compress(Node<T> *node, int count)
+    {
+        Node<T> *tmp = node->GetRight();
+
+        for (int i = 0; i < count; i++)
+        {
+            Node<T> *oldTmp = tmp;
+            tmp = tmp->GetRight();
+            node->SetRight(tmp);
+            oldTmp->SetRight(tmp->GetLeft());
+            tmp->SetLeft(oldTmp);
+            node = tmp;
+            tmp = tmp->GetRight();
+        }
+    }
+
+    Node<T> *Balance(Node<T> *node)
+    {
+        auto *grand = new Node<T>();
+        grand->SetRight(node);
+
+        int count = TreeToVine(grand);
+
+        int h  = (int) log2(count + 1);
+
+        int m = (int) pow(2, h) - 1;
+
+        Compress(grand, count - m);
+
+        for (m = m / 2; m > 0; m /= 2)
+        {
+            Compress(grand, m);
+        }
+
+        return grand->GetRight();
+    }
+
 public:
     BinaryTree<T>()
     {
@@ -350,6 +416,13 @@ public:
     bool IsSubTree(BinaryTree<T> &subTree) {
         return IsSubTree(this->root, subTree.root);
     }
+
+    Node<T> *Balance()
+    {
+        this->root = Balance(this->root);
+        return this->root;
+    }
+
 };
 
 #endif //LAB4_MEPHI_TREE_H

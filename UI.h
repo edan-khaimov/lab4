@@ -12,7 +12,7 @@ void help()
     std::cout << "To get this menu type <help>" << std::endl;
     std::cout << "To finish program type <quit>" << std::endl;
     std::cout << "Available functions for tree:" << std::endl;
-    std::cout << "print, insert, delete, is_sub_tree, get_sub_tree, find_min, find_max" << std::endl;
+    std::cout << "print, insert, balance, delete, is_sub_tree, get_sub_tree, find_min, find_max" << std::endl;
     std::cout << "Available traverses for tree:" << std::endl;
     std::cout << "KPL, KLP, LKP, LPK, PKL, PLK" << std::endl;
     std::cout << "Available types of values: int, complex" << std::endl;
@@ -78,6 +78,9 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         T value;
         std::cout << "Enter value:" << std::endl;
         std::cin >> value;
+        std::cout << "Before insert: " << std::endl;
+        printTree("", tree.GetRoot(), false);
+        std::cout << "After insert: " << std::endl;
         tree.Insert(value);
         printTree("", tree.GetRoot(), false);
     }
@@ -95,6 +98,9 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         }
         else
         {
+            std::cout << "Before delete: " << std::endl;
+            printTree("", tree.GetRoot(), false);
+            std::cout << "After delete: " << std::endl;
             printTree("", tree.GetRoot(), false);
         }
     }
@@ -114,6 +120,8 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         std::cout << "Enter value:" << std::endl;
         T value;
         std::cin >> value;
+        std::cout << "Main tree: " << std::endl;
+        printTree("", tree.GetRoot(), false);
         std::cout << "Sub tree:" << std::endl;
         printTree("", tree.GetSubTree(value).GetRoot(), false);
     }
@@ -128,6 +136,16 @@ void treeInterface(BinaryTree<T>& tree, const std::string& command)
         std::cout << "Create tree:" << std::endl;
         setTree(tree);
         std::cout << "Max value: " << tree.FindMax()->GetValue() << std::endl;
+    }
+    else if (command == "balance")
+    {
+        std::cout << "Create tree:" << std::endl;
+        setTree(tree);
+        std::cout << "Before balance: " << std::endl;
+        printTree("", tree.GetRoot(), false);
+        std::cout << "After balance: " << std::endl;
+        tree.Balance();
+        printTree("", tree.GetRoot(), false);
     }
     else if (command == "KPL")
     {

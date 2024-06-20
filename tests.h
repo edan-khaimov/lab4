@@ -72,6 +72,8 @@ void testTreeFind()
 
     assert(test.FindMax()->GetValue() == 10);
     assert(test.FindMin()->GetValue() == -2);
+    assert(test.IsElementInTree(10) == true);
+    assert(test.IsElementInTree(0) == false);
 }
 
 void testTreeDelete()
@@ -173,6 +175,24 @@ void testReduce()
     assert(result == 36);
 }
 
+void testBalance()
+{
+    int a[5] = {5, 1, 10, 20, 35};
+    BinaryTree<int> test;
+    for (int i : a)
+    {
+        test.Insert(i);
+    }
+
+    test.Balance();
+
+    assert(test.GetRoot()->GetValue() == 20);
+    assert(test.GetRoot()->GetLeft()->GetValue() == 5);
+    assert(test.GetRoot()->GetRight()->GetValue() == 35);
+    assert(test.GetRoot()->GetLeft()->GetLeft()->GetValue() == 1);
+    assert(test.GetRoot()->GetLeft()->GetRight()->GetValue() == 10);
+}
+
 void testTree()
 {
     testTreeConstructors();
@@ -183,6 +203,7 @@ void testTree()
     testMap();
     testWhere();
     testReduce();
+    testBalance();
 }
 
 #endif
