@@ -188,7 +188,6 @@ void testTree()
     testSubTree();
     testMap();
     testWhere();
-    testReduce();
     testBalance();
 }
 

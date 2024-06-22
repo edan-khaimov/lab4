@@ -155,7 +155,7 @@ private:
         }
         if (value < node->GetValue())
         {
-            root->SetLeft(DeleteElement(node->GetLeft(), value));
+            node->SetLeft(DeleteElement(node->GetLeft(), value));
         }
         else if (value > node->GetValue())
         {
